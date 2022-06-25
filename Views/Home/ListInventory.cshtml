@@ -1,0 +1,64 @@
+﻿@model IEnumerable<Shop_Bridge.Models.Inventory>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<style>
+    .flex-container {
+        display: flex;
+        /* flex-direction: row;
+        flex-wrap: wrap;*/
+        flex-flow: row wrap;
+        justify-content: space-evenly;
+        /*align-items: baseline;*/
+        align-content: flex-start;
+    }
+</style>
+
+<div class="text-center">
+    <h1 class="display-4">Inventory Book Records</tt> </h1>
+    <hr />
+    <p>
+        "ShopBridge" is an e-commerce application. As a part of this app, you need to build functionalities that
+        helps manage different items they would have for sale. This will require a frontend/backend solution. As
+        a Backend developer, you would be needing to provide a functional solution that can be consumed by
+        the frontend application..
+    </p>
+</div>
+<hr />
+
+
+<div class="flex-container">
+
+
+    @foreach (var item in Model)
+    {
+
+        <div class="card text-dark bg-warning mb-3" style="max-width: 18rem;">
+            <div class="card-header ">#@Html.DisplayFor(modelItem => item.id) :-  @Html.DisplayFor(modelItem => item.name)</div>
+            <div class="card-body">
+                <h5 class="card-title">@Html.DisplayFor(modelItem => item.description)</h5>
+                <p class="card-text">$<strike>@Html.DisplayFor(modelItem => item.price)</strike> @Html.DisplayFor(modelItem => item.discount)</p>
+            </div>
+        </div>
+
+    }
+</div>
+    
+<br />
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-end">
+            <li class="page-item disabled">
+                <a class="page-link">Previous</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+                <a class="page-link" href="#">Next</a>
+            </li>
+        </ul>
+    </nav>
+
+

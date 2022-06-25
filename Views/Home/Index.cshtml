@@ -1,0 +1,169 @@
+﻿@model Shop_Bridge.Models.ModelView
+@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome to <tt>Shop Bridge</tt> </h1>
+    <hr />
+    <p>
+        "ShopBridge" is an e-commerce application. As a part of this app, you need to build functionalities that
+        helps manage different items they would have for sale. This will require a frontend/backend solution. As
+        a Backend developer, you would be needing to provide a functional solution that can be consumed by
+        the frontend application..
+    </p>
+</div>
+<hr />
+
+<div class="row">
+    <div class="col-4">
+        <p><a class="btn btn-primary btn btn-outline-warning small" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Login </a> </p>
+
+        <p><a class="btn btn-secondary btn-outline-warning small" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Registration</a> </p>
+
+    </div>
+    <div class="col-4">
+        @{
+            if (HttpContextAccessor.HttpContext.Session.GetString("username") != null)
+            {
+                <p>Your UserName</p>
+                <h1>
+                    @HttpContextAccessor.HttpContext.Session.GetString("username")
+                </h1>
+            }
+
+        }
+
+        @{
+            if (HttpContextAccessor.HttpContext.Session.GetString("email") != null)
+            {
+                <p>Your EMAIL</p>
+                <h1>
+                    @HttpContextAccessor.HttpContext.Session.GetString("email")
+                </h1>
+            }
+
+        }
+
+    </div>
+    <div class="col-4">
+        @{
+            if (HttpContextAccessor.HttpContext.Session.GetString("role") == "Admin")
+            {
+                <div class="card text-center">
+                    <div class="card-header">
+                        You are Admin
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Administrative treatment</h5>
+                        <p class="card-text">With suppose you have a access to add, update, delete <tt>Inventory</tt> Details.</p>
+                        <a href="Admin" class="btn btn-primary">Admin Panel</a>
+                    </div>
+                    <div class="card-footer text-muted">
+                        @DateTime.Now
+                    </div>
+                </div>
+            }
+        }
+
+    </div>
+</div>
+
+
+
+<hr />
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header btn-outline-warning ">
+                <h5 class="modal-title btn-outline-warning " id="exampleModalToggleLabel">Registration</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                @using (Html.BeginForm("Registration", "Home", FormMethod.Post))
+                {
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <span>Name</span> @Html.DisplayFor(x => x.user_name)
+                    @Html.TextBoxFor(x => x.user_name)
+                    <br /> <span asp-validation-for="user_name"></span>
+                    @Html.ValidationMessageFor(x => x.user_name)
+
+
+                    <br />
+                    <span>Mail</span> @Html.DisplayFor(x => x.user_mail)
+                    @Html.TextBoxFor(x => x.user_mail)
+                    <br /><span asp-validation-for="user_mail"></span>
+                    @Html.ValidationMessageFor(x => x.user_mail)
+                    <br />
+                    <span>Password</span> @Html.DisplayFor(x => x.user_password) 
+                    @Html.PasswordFor(x => x.user_password)
+                    <br /><span asp-validation-for="user_password"></span>
+                    @Html.ValidationMessageFor(x => x.user_password)
+
+                    <br />
+                    <span>Role</span> @Html.DropDownListFor(x => x.role, new SelectList(Enum.GetValues(typeof(UserRole))), "Select User Role")
+                    <br />
+
+                    @Html.ValidationSummary()
+
+                    <input type="submit" value="Submit" />
+
+                }
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Already have an Account?</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalToggleLabel2">Login</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("Login", "Home", FormMethod.Post))
+                {
+                    <span>Mail</span>@Html.DisplayFor(x => x.user_mail)
+                    @Html.TextBoxFor(x => x.user_mail)
+                    <br /><span asp-validation-for="user_mail"></span>
+                    @Html.ValidationMessageFor(x => x.user_mail)
+                    <br />
+                    <span>Password</span>@Html.DisplayFor(x => x.user_password)
+                    @Html.PasswordFor(x => x.user_password)
+                    <br /><span asp-validation-for="user_password"></span>
+                    @Html.ValidationMessageFor(x => x.user_password)
+                    <br />
+                    @Html.ValidationSummary()
+
+                    <input type="submit" value="Submit" />
+                }
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Back to first</button>
+            </div>
+        </div>
+    </div>
+</div>
